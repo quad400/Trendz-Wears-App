@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "83f76c81-7329-4e2f-872c-df0f46399d40"
+      }
+    },
+    "owner": "quad400"
   }
 }
