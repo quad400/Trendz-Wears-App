@@ -40,14 +40,14 @@ const SignIn = ({ navigation }) => {
         <View className="mt-5">
           <TextButton
             label="Sign In"
-            onPress={() => navigation.navigate("Home")}
+            onPress={() => navigation.navigate("BottomNavigation",{screen: "Home"})}
           />
         </View>
         <View className="flex flex-row justify-center items-center mt-6">
           <Text className="text-[12px] font-interregular">
             Does not have an account ?{" "}
           </Text>
-          <Pressable onPress={() => navigation.navigate("SignUn")}>
+          <Pressable onPress={() => navigation.navigate("SignUp")}>
             <Text className="text-primary text-[12px] font-interregular">
               Sign up
             </Text>

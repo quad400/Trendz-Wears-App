@@ -38,3 +38,41 @@ export const categories = [
     },
 
 ]
+
+export const cart = [
+    {
+        id: 1,
+        name: "Brown Jacket",
+        size: "XL",
+        image: require("../assets/images/img1.png"),
+        price: 3000,
+    },
+    {
+        id: 2,
+        name: "Brown Jacket",
+        size: "XL",
+        image: require("../assets/images/img2.png"),
+        price: 3000,
+    },
+    {
+        id: 3,
+        name: "Brown Jacket",
+        size: "XL",
+        image: require("../assets/images/img3.png"),
+        price: 3000,
+    },
+    {
+        id: 4,
+        name: "Brown Jacket",
+        size: "XL",
+        image: require("../assets/images/img1.png"),
+        price: 3000,
+    },
+    {
+        id: 5,
+        name: "Brown Jacket",
+        size: "XL",
+        image: require("../assets/images/img2.png"),
+        price: 3000,
+    },
+]

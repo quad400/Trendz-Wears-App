@@ -1,15 +1,43 @@
-import { View, Text, TextInput, Pressable, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  FlatList,
+  ImageBackground,
+  ScrollView,
+} from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { AntDesign, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { categories } from "../constants";
+import { products } from "../api";
+import axios from "axios";
+import { ProductData } from "../constants/data";
 
 const Home = ({ navigation }) => {
   const [selectedCategory, setSelectedCategory] = useState("all");
 
+  // const BASE_URL = "http://127.0.0.1:8000/api";
+
+  // const products = async () => {
+  //   try {
+  //     const response = await axios.get(`http://127.0.0.1:8000/api/product/`);
+  //     console.log(response)
+  //     console.log(response.data)
+  //     return response.data
+  // } catch (e) {
+  //     console.log(e.message)
+  //   }
+  // };
+
   function renderCategory() {
     return (
       <FlatList
+      contentContainerStyle={{
+        backgroundColor: "white",
+        paddingBottom: 5
+      }}
         data={categories}
         keyExtractor={(item) => `${item.name}`}
         horizontal
@@ -33,6 +61,51 @@ const Home = ({ navigation }) => {
           );
         }}
       />
+    );
+  }
+
+  function renderProducts() {
+    return (
+      <View className="flex flex-row gap-x-3 gap-y-1 mt-3 flex-wrap mx-1">
+        {ProductData.map((item, index) => {
+          return (
+            <Pressable onPress={()=> {navigation.navigate("Detail")}} key={index}>
+              <ImageBackground
+                source={item.image}
+                className="h-[140px] w-[159px]"
+                borderRadius={5}
+              >
+                <View className="bg-gray-100 justify-center items-center rounded-full h-6 w-6 absolute right-2 top-2">
+                  <MaterialIcons
+                    onPress={() => {
+                      console.log("fav");
+                    }}
+                    name="favorite-outline"
+                    size={16}
+                    color="#404040"
+                  />
+                </View>
+              </ImageBackground>
+              <View className="mt-2 mb-1">
+                <View className="flex-row justify-between items-center">
+                  <Text className="text-textColor text-[12px] font-intersemibold">
+                    {item.name}
+                  </Text>
+                  <View className="flex-row justify-center space-x-1 items-center">
+                    <AntDesign name="star" size={10} color="gold" />
+                    <Text className="text-textColor font-interregular text-[10px]">
+                      5
+                    </Text>
+                  </View>
+                </View>
+                <Text className="text-textColor text-[11px] font-interregular">
+                  N{item.price}
+                </Text>
+              </View>
+            </Pressable>
+          );
+        })}
+      </View>
     );
   }
 
@@ -60,10 +133,14 @@ const Home = ({ navigation }) => {
         </View>
       </Pressable>
 
-      <View>
+      <ScrollView
+        stickyHeaderHiddenOnScroll={true}
+        stickyHeaderIndices={[0]}
+      >
         {/* Category */}
         {renderCategory()}
-      </View>
+        {renderProducts()}
+      </ScrollView>
     </SafeAreaView>
   );
 };

@@ -9,7 +9,7 @@ const Header = ({lable}) => {
 
   return (
     <View className="flex flex-row items-center justify-start m-3">
-      <Feather onPress={()=> navigation.goBack()} name="arrow-left-circle" size={22} color="#404040" />
+      <Feather onPress={()=> navigation.goBack()} name="arrow-left-circle" size={22} color="#40404060" />
       <Text className="text-textColor text-[18px] font-intermedium flex-1 text-center">{lable}</Text>
     </View>
   )
