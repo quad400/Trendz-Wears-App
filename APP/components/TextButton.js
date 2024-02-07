@@ -11,7 +11,7 @@ const TextButton = ({
 }) => {
   return (
     <Pressable
-      className={`flex flex-row h-[40px] justify-center items-center ${
+      className={`flex flex-row h-[50px] justify-center items-center ${
         isLoading ? "bg-secondary" : "bg-primary"
       } w-[100%] rounded-md`}
       onPress={onPress}
@@ -21,7 +21,7 @@ const TextButton = ({
       {isLoading ? (
         <ActivityIndicator size="small" color="white" />
       ) : (
-        <Text className="font-interregular text-white text-center text-[14px] py-2">
+        <Text className="font-interregular text-white text-center text-[16px] py-2">
         {label}
       </Text>
       )}

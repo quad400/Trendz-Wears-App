@@ -20,20 +20,22 @@ const SignUp = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [address, setAddress] = useState("");
   const [isAgree, setIsAgree] = useState(false);
   const [getEmailValidationStatus, setGetEmailValidationStatus] =
     useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleSubmit = async () => {
-    const body = { name, email, password };
+    const body = { name, email, address, password };
     setIsLoading(true);
 
     if (
       name == "" ||
       email === "" ||
+      address === "" ||
       password === "" ||
       confirmPassword === "" ||
       isAgree === false
@@ -48,7 +50,7 @@ const SignUp = ({ navigation }) => {
         if (password.length > 6) {
           if (getEmailValidationStatus) {
             dispatch(Register(body));
-            setIsLoading(false)
+            setIsLoading(false);
             navigation.navigate("SignIn");
           } else {
             showMessage({
@@ -73,7 +75,6 @@ const SignUp = ({ navigation }) => {
       }
     }
   };
-
 
   return (
     <SafeAreaView className="bg-white h-full w-full px-5">
@@ -105,6 +106,22 @@ const SignUp = ({ navigation }) => {
             setGetEmailValidationStatus={setGetEmailValidationStatus}
             value={email}
           />
+          <View className="w-full mt-2">
+            <Text>Address</Text>
+            <View className="flex-row w-full h-10 px-2 mt-2 rounded-[5px] border-gray-100 border items-center">
+              <TextInput
+                placeholder="Enter your address"
+                cursorColor="black"
+                autoCapitalize="words"
+                autoComplete="off"
+                keyboardType="default"
+                autoCorrect={false}
+                value={address}
+                onChangeText={setAddress}
+                className="text-[14px] w-full font-intermedium outline-none"
+              />
+            </View>
+          </View>
           <InputText
             label="Password"
             placeholder="Enter your password"

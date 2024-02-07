@@ -50,14 +50,14 @@ const InputText = ({
           value={value}
           secureTextEntry={!open}
           onChangeText={handleChange}
-          className={`text-[12px] ${label === "Password" || label === "Confirm Password" ? "w-[95%]" : "w-full"} font-intermedium outline-none`}
+          className={`text-[14px] ${label === "Password" || label === "Confirm Password" ? "w-[95%]" : "w-full"} font-intermedium outline-none`}
         />
 
         {isPassword && (
           <Pressable onPress={() => setOpen(!open)} className="mr-3">
             <Feather
               name={`${open ? "eye" : "eye-off"}`}
-              size={16}
+              size={20}
               color="#6c6d83"
             />
           </Pressable>

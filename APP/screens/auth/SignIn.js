@@ -81,11 +81,11 @@ const dispatch = useDispatch()
           />
         </View>
         <View className="flex flex-row justify-center items-center mt-6">
-          <Text className="text-[12px] font-interregular">
+          <Text className="text-[14px] font-interregular">
             Does not have an account ?{" "}
           </Text>
           <Pressable onPress={() => navigation.navigate("SignUp")}>
-            <Text className="text-primary text-[12px] font-interregular">
+            <Text className="text-primary text-[14px] font-interregular">
               Sign up
             </Text>
           </Pressable>

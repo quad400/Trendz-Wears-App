@@ -140,7 +140,7 @@ const Cart = ({ navigation }) => {
     };
 
     return (
-      <Swipeable renderRightActions={rightSwipeAction}>
+      <Swipeable renderRightActions={rightSwipeAction} key={item?._id}>
         <View className="flex-row gap-3 justify-start items-center mx-3 mt-2">
           <Image
             source={{ uri: item?.product?.images[0] }}
@@ -208,7 +208,7 @@ const Cart = ({ navigation }) => {
                 )
               }
               renderItem={({ item, index }) => {
-                return <CartItem key={item?._id} item={item} token={token} />;
+                return <CartItem key={item?._id} item={item} />;
               }}
             />
           )}
