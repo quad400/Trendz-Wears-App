@@ -7,13 +7,13 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { InputText, TextButton } from "../../components";
+import { InputText, Loader, TextButton } from "../../components";
 import { Checkbox } from "react-native-paper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { Register } from "../../context/slicers";
 import { showMessage } from "react-native-flash-message";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const SignUp = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -26,6 +26,7 @@ const SignUp = ({ navigation }) => {
     useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const {loading} = useSelector(state=> state.product)
   const dispatch = useDispatch();
 
   const handleSubmit = async () => {
@@ -49,35 +50,32 @@ const SignUp = ({ navigation }) => {
       if (password === confirmPassword) {
         if (password.length > 6) {
           if (getEmailValidationStatus) {
-            dispatch(Register(body));
-            setIsLoading(false);
-            navigation.navigate("SignIn");
+            dispatch(Register(body,navigation));
+            
           } else {
             showMessage({
               message: "Invalid email",
               type: "danger",
             });
-            setIsLoading(false);
           }
         } else {
           showMessage({
             message: "password must be greater than 7 character",
             type: "danger",
           });
-          setIsLoading(false);
         }
       } else {
         showMessage({
           message: "password mismatch",
           type: "danger",
         });
-        setIsLoading(false);
       }
     }
   };
 
   return (
     <SafeAreaView className="bg-white h-full w-full px-5">
+      {loading && <Loader />}
       <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
         <View className="flex justify-start items-center ">
           <Text className="font-intersemibold text-textColor mt-4 text-[20px]">
@@ -158,7 +156,6 @@ const SignUp = ({ navigation }) => {
 
         <TextButton
           label="Sign Up"
-          isLoading={isLoading}
           onPress={handleSubmit}
           // onPress={()=>navigation.navigate("BottomNavigation", {screen: "Home"})}
         />

@@ -4,10 +4,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Entypo, Feather } from "@expo/vector-icons";
 import { OtpInput } from "react-native-otp-entry";
 import axios from "axios";
-import { TextButton } from "../../components";
+import { Loader, TextButton } from "../../components";
 import { BASE_URL } from "../../context/base";
 import { ResendCode, Verify } from "../../context/slicers";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const OTP = ({ navigation, route }) => {
   const [code, setCode] = useState("");
@@ -19,7 +19,8 @@ const OTP = ({ navigation, route }) => {
   const [alertMessage, setAlertMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const dispatch = useDispatch()
+  const { loading } = useSelector((state) => state.product);
+  const dispatch = useDispatch();
   useEffect(() => {
     let interval = null;
 
@@ -46,16 +47,17 @@ const OTP = ({ navigation, route }) => {
     const body = { code: code };
     console.log(body);
     setIsLoading(true);
-    dispatch(Verify(body))
-    setIsLoading(false)
+    dispatch(Verify(body));
+    setIsLoading(false);
   };
 
-  function handleResendCode(){
-    dispatch(ResendCode())
+  function handleResendCode() {
+    dispatch(ResendCode());
   }
 
   return (
     <SafeAreaView className="flex-1 bg-white h-full w-full mt-4 px-3">
+      {loading && <Loader />}
       <View className="flex-1 w-full justify-start items-center">
         <Text className="font-interbold text-[20px] text-textColor">
           Enter Code
@@ -103,10 +105,7 @@ const OTP = ({ navigation, route }) => {
           {formatTime(timeRemaining)}
         </Text>
 
-        <Pressable
-          className="mt-20"
-          onPress={handleResendCode}
-        >
+        <Pressable className="mt-20" onPress={handleResendCode}>
           <Text className="font-interregular text-[12px] text-primary">
             Resend Code
           </Text>

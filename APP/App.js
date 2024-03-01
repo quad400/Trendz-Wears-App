@@ -1,3 +1,5 @@
+import 'react-native-reanimated'
+import 'react-native-gesture-handler'
 import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import MainNavigation from "./navigations/MainNavigation";

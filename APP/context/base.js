@@ -1,1 +1,1 @@
-export const BASE_URL = "http://192.168.43.63:5000/api/"
+export const BASE_URL = "https://kdtrendz.onrender.com/api/"

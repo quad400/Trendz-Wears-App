@@ -2,7 +2,7 @@ import { View, Text, Pressable } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { InputText, TextButton } from "../../components";
+import { InputText, Loader, TextButton } from "../../components";
 import { Login } from "../../context/slicers";
 import { AuthContext } from "../../context/AuthContext";
 import { showMessage } from "react-native-flash-message";
@@ -16,7 +16,7 @@ const SignIn = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
 
 
-  const {user} = useSelector(state=> state.product)
+  const {user, loading} = useSelector(state=> state.product)
 
   
 const dispatch = useDispatch()
@@ -47,6 +47,7 @@ const dispatch = useDispatch()
 
   return (
     <SafeAreaView className="bg-white h-full w-full px-5">
+      {loading && <Loader />}
       <View className="flex justify-start items-center ">
         <Text className="font-intersemibold text-textColor mt-4 text-[20px]">
           Login Account

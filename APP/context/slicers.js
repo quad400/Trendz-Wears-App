@@ -10,6 +10,7 @@ const initialState = {
   user: null,
   cart: null,
   search: [],
+  loading: false,
   token: null,
 };
 
@@ -17,6 +18,9 @@ const slice = createSlice({
   name: "product",
   initialState,
   reducers: {
+    loading: (state, action) => {
+      state.loading = action.payload;
+    },
     getAllProducts: (state, action) => {
       state.products = [...action.payload];
     },
@@ -210,17 +214,21 @@ export const AddToWishlist = (id) => {
 ''''''''''''''''''''''''''USER'''''''''''''''''''''''''
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 */
-export const Register = (body) => {
+export const Register = (body, navigation) => {
   return async (dispatch, getState) => {
     try {
+      dispatch(slice.actions.loading(true));
       await axios.post(`${BASE_URL}user/register`, body, {
         headers: { "Content-Type": "application/json" },
       });
+      dispatch(slice.actions.loading(false));
       showMessage({
         message: "Account created successfully",
         type: "success",
       });
+      navigation.navigate("SignIn");
     } catch (error) {
+      dispatch(slice.actions.loading(false));
       showMessage({
         message: "User already exists with that email",
         type: "danger",
@@ -233,9 +241,11 @@ export const Register = (body) => {
 export const Login = (body, navigation) => {
   return async (dispatch, getState) => {
     try {
+      dispatch(slice.actions.loading(true));
       const { data } = await axios.post(`${BASE_URL}user/login`, body, {
         headers: { "Content-Type": "application/json" },
       });
+      dispatch(slice.actions.loading(false));
       if (data?.email_verified === false) {
         await AsyncStorage.setItem("token", data?.token);
         navigation.navigate("OTP", { token: data?.token });
@@ -244,10 +254,12 @@ export const Login = (body, navigation) => {
           type: "success",
         });
       } else {
+        dispatch(slice.actions.loading(false));
         dispatch(slice.actions.token(data?.token));
       }
       dispatch(slice.actions.user(data));
     } catch (error) {
+      dispatch(slice.actions.loading(false));
       showMessage({
         message: "Invalid details",
         type: "danger",
@@ -260,6 +272,7 @@ export const Login = (body, navigation) => {
 export const Verify = (body) => {
   return async (dispatch, getState) => {
     try {
+      dispatch(slice.actions.loading(true));
       const token = await AsyncStorage.getItem("token");
       const { data } = await axios.post(`${BASE_URL}user/verify`, body, {
         headers: {
@@ -267,10 +280,11 @@ export const Verify = (body) => {
           Authorization: `Bearer ${token}`,
         },
       });
+      dispatch(slice.actions.loading(false));
       dispatch(slice.actions.user(data?.data));
       dispatch(slice.actions.token(token));
-    
     } catch (error) {
+      dispatch(slice.actions.loading(false));
       showMessage({
         message: "Invalid OTP code or has expire",
         type: "danger",
@@ -280,12 +294,11 @@ export const Verify = (body) => {
   };
 };
 export const ResendCode = () => {
-  
   return async (dispatch, getState) => {
     try {
       const token = await AsyncStorage.getItem("token");
-      console.log()
-      const res = await axios.post(`${BASE_URL}user/regenerate-otp`, null,{
+      console.log();
+      const res = await axios.post(`${BASE_URL}user/regenerate-otp`, null, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
