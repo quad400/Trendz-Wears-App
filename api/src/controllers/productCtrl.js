@@ -6,16 +6,10 @@ const Cart = require("../models/cartModel");
 const createProduct = asyncHandler(async (req, res) => {
   try {
     const user = req.user;
-
-    if (user.role === "admin") {
+    if (user){
       const newProduct = await Product.create(req.body);
       return res.status(201).json(newProduct);
     }
-
-    return res.status(400).json({
-      status: "fail",
-      message: "User must have a brand name to create product",
-    });
   } catch (err) {
     throw new Error(err);
   }
